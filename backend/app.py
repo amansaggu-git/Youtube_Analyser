@@ -6,7 +6,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from google import genai
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins="*")
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
