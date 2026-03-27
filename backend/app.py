@@ -103,12 +103,25 @@ def analyze():
 
     # Fetch transcript
     try:
-        ytt = YouTubeTranscriptApi()
+        from youtube_transcript_api.proxies import WebshareProxyConfig
+    
+        PROXY_USERNAME = os.environ.get("PROXY_USERNAME")
+        PROXY_PASSWORD = os.environ.get("PROXY_PASSWORD")
+    
+        if PROXY_USERNAME and PROXY_PASSWORD:
+            proxy_config = WebshareProxyConfig(
+                proxy_username=PROXY_USERNAME,
+                proxy_password=PROXY_PASSWORD,
+            )
+            ytt = YouTubeTranscriptApi(proxy_config=proxy_config)
+        else:
+            ytt = YouTubeTranscriptApi()
+    
         try:
             fetched = ytt.fetch(video_id, languages=["en"])
         except Exception:
             fetched = ytt.fetch(video_id)
-
+    
         transcript = fetched.to_raw_data()
         lines = [f"[{format_time(e['start'])}]  {e['text']}" for e in transcript]
         full_text = "\n".join(lines)
