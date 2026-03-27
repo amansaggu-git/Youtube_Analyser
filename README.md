@@ -8,7 +8,7 @@ Replaces the Colab notebook. Runs as a live web app accessible from any browser.
 ## Project Structure
 
 ```
-yt-analyzer/
+Youtube-Analyser/
 ├── backend/
 │   ├── app.py              ← Flask API (fetches transcript + calls Gemini)
 │   └── requirements.txt
